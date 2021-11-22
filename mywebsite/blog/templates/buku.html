@@ -1,0 +1,80 @@
+{% extends 'base.html' %} {% block content %}
+<center style="margin-top: 50px">
+  <h1>PERPUSTAKAAN</h1>
+</center>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tombolTambahData mb-2">
+        <a href="{% url 'tambah' %}"><button type="button" class="btn btn-primary">Tambah Buku</button></a>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>JUDUL</th>
+            <th>PENULIS</th>
+            <th>PENERBIT</th>
+            <th>JUMLAH</th>
+            <th>KELOMPOK</th>
+            <th>ACTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for data in books %}
+          <tr>
+            <td><a href="{% url 'editbuku' data.id %}">{{ data.judul }}</a></td>
+            <td>{{ data.penulis }}</td>
+            <td>{{ data.penerbit }}</td>
+            <td>{{ data.jumlah_buku }}</td>
+            <td>{{ data.kelompok_id }}</td>
+            <td>
+              <a href="/editbuku/{{ data.id }}"><button type="button" class="btn btn-primary">Edit</button></a>
+
+              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus-{{ buku.id }}">Hapus</button>
+            </td>
+
+            <!-- <div class="modal" id="hapus-{{ buku.id }}">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <div class="modal-title">
+                      <h3>Delete</h3>
+                    </div>
+                    <div class="modal-body">Apakah Anda yakin menghapus buku {{ data.judul }} ?</div>
+                    <div class="modal-footer">
+                      <a href="{% url 'hapus' data.id %}"><button class="btn btn-danger">hapus</button></a>
+                      <a href="{% url 'buku' %}"><button class="btn btn-danger">Kembali</button></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+            <!-- Button trigger modal -->
+
+            <!-- Modal -->
+            <div class="modal fade" id="hapus-{{ buku.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Hapus</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">Apakah Anda yakin menghapus buku <strong>{{ data.judul }}</strong>?</div>
+                  <div class="modal-footer">
+                    <a href="{% url 'hapus' data.id %}"><button class="btn btn-danger">Hapus</button></a>
+                    <a href="{% url 'buku' %}"><button class="btn btn-primary">Kembali</button></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
